@@ -1,0 +1,37 @@
+:root {
+    --primary_1: #2C73D2;
+    --primary_2: #0081CF;
+    --primary_3: #009EFA;
+    --secondary: #845EC2;
+
+    --black: #4B4453;
+    --white: #fafafa;
+}
+
+.conteiner{
+  min-height: 100vh;
+  animation: gradientAnimation 10s linear infinite alternate;
+  background-size: 400% 400%; 
+  background-image: linear-gradient(
+    to right top,
+    #2c73d2,
+    #277bda,
+    #428ff0,
+    #6a77dc,
+    #786bd0,
+    #845ec2
+  );  
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%; 
+    }
+}

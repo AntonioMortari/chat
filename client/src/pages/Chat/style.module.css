@@ -1,0 +1,72 @@
+
+
+.titleChat{
+    font-size: 1.5rem;
+    color: var(--black);
+}
+
+.inputMessage{
+    width: 90%;
+    background-color: transparent;
+    color: var(--black);
+    height: 30px;
+    outline: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.199);
+
+}
+
+.inputMessage:focus{
+    border-bottom: 1px solid var(--secondary);
+}
+
+.containerMessages::-webkit-scrollbar {
+    width: 4px; /* Largura da barra de rolagem */
+  }
+  
+  .containerMessages::-webkit-scrollbar-track {
+    background-color:  rgba(0, 0, 0, 0.171); /* Cor do fundo da área da barra de rolagem */
+  }
+  
+  .containerMessages::-webkit-scrollbar-thumb {
+    background-color: var(--secondary); /* Cor do indicador da barra de rolagem */
+    border-radius: 8px; /* Borda arredondada do indicador */
+  }
+  
+  /* Estilos para a barra de rolagem no Chrome, Edge e Safari */
+  .containerMessages {
+    scrollbar-width: thin; /* Define a largura da barra de rolagem */
+  }
+  
+  .containerMessages::-webkit-scrollbar {
+    width: 3px; /* Largura da barra de rolagem */
+  }
+
+.myMessage{
+    background-color:#1279ff28;
+    padding: 8px;
+    max-width: 190px;
+    border-radius: 6px;
+    align-self: end;
+}
+
+.otherMessage{
+    background-color: rgba(0, 0, 0, 0.123);
+    padding: 8px;
+    max-width: 190px;
+    border-radius: 6px;
+    align-self: start;
+}
+
+.myMessage span{
+    font-weight: bold;
+    color: var(--black);
+}
+
+.messageContent{
+    color: rgba(0, 0, 0, 0.623);
+}
+
+.messageHour{
+    color: rgba(0, 0, 0, 0.479);
+    font-size: .7rem;
+}
