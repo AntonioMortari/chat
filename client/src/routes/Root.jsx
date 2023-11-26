@@ -6,6 +6,7 @@ import {SocketContextProvider} from '../contexts/SocketContext'
 // pages
 import Join from '../pages/Join';
 import Chat from '../pages/Chat';
+import NotFound from '../pages/NotFound';
 
 function Root() {
     return (
@@ -15,6 +16,7 @@ function Root() {
                 <Routes>
                     <Route path='/' element={<Join />} />
                     <Route path='/chat' element={<Chat />} />
+                    <Route path='*' element={<NotFound />} />
                 </Routes>
             </SocketContextProvider>
 

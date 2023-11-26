@@ -21,7 +21,7 @@ import useSocket from '../../hooks/useSocket'
 
 function Join() {
     const usernameRef = useRef()
-    const { setSocket, setMessageList } = useSocket()
+    const { setSocket, setMessageList, typing, setTyping } = useSocket()
     const navigate = useNavigate()
 
     const handleSubmit = async() => {

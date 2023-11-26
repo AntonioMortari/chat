@@ -9,7 +9,9 @@ import {
     Box,
     Divider,
     InputGroup,
-    InputRightElement
+    InputRightElement,
+    Button,
+    
 
 } from '@chakra-ui/react'
 
@@ -28,6 +30,7 @@ function Chat() {
     const navigate = useNavigate()
 
     const messageRef = useRef()
+    const scrollRef = useRef()
 
     useEffect(() =>{
         if(!socket) return navigate('/')
@@ -43,11 +46,17 @@ function Chat() {
         await socket.emit('message', message)
 
         clearInput()
+        scrollToBottom()
     }
 
     const clearInput = () =>{
         messageRef.current.value = ''
     }
+
+    const scrollToBottom = () => {
+            scrollRef.current.scrollIntoView({ behavior: 'smooth' });
+    };
+
 
     const verifyKey = (e) =>{
         if(e.key == 'Enter'){
@@ -65,9 +74,15 @@ function Chat() {
         navigate('/')
     }
 
+    const showIsTyping = async () =>{
+        if(messageRef.current.value.length == 0){
+            await socket.emit('not_typing')
+        }
+    }
+
     return (
         <>
-            <Flex flexDir='column' w='450px' h='450px' bg='white' borderRadius='8px' p='15px' justifyContent='space-between'>
+            <Flex flexDir='column' w='450px' h='500px' bg='white' borderRadius='8px' p='15px' justifyContent='space-between'>
                 <div>
                     <Heading display='flex' pb='4px' justifyContent='space-between'>
                         <button onClick={backToHome}>
@@ -82,7 +97,7 @@ function Chat() {
                 </div>
 
 
-                <Flex height='80%' bg='white' overflowY='auto' flexDir='column' gap='15px' className={style.containerMessages} paddingRight='15px'>
+                <Flex height='80%' bg='white' overflowY='auto' flexDir='column' gap='15px' className={style.containerMessages} paddingRight='15px' >
                     {/* messages */}
 
                     {
@@ -102,13 +117,15 @@ function Chat() {
                                 />
                             }
                         })
-                    }
+                    }     
 
+                    <div ref={scrollRef} /> 
                 </Flex>
 
                 <Box>
+                    
                     <InputGroup>
-                        <input onKeyDown={verifyKey} type="text" ref={messageRef} className={style.inputMessage} />
+                        <input onKeyDown={verifyKey} onChange={showIsTyping} type="text" ref={messageRef} className={style.inputMessage} />
 
                         <InputRightElement paddingBottom='10px'>
                             <button onClick={handleSubmit}>

@@ -7,6 +7,7 @@ function SocketContextProvider({children}) {
     const [socket, setSocket] = useState(null)
     const [messageList, setMessageList] = useState([])
 
+
     return ( 
         <SocketContext.Provider value={{socket, setSocket, messageList, setMessageList}}>
 
