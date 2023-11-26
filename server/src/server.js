@@ -4,7 +4,7 @@ const {Server} = require('socket.io')
 
 const app = express()
 const httpServer = http.createServer(app)
-const io = new Server(httpServer, { cors: { origin: 'http://localhost:5173'}})
+const io = new Server(httpServer, { cors: { origin: 'https://chat-silk-pi.vercel.app/'}})
 
 io.on('connection', socket => {
     console.log('Usuário conectado', socket.id)
