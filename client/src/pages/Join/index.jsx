@@ -32,7 +32,7 @@ function Join() {
         }
 
         // conetar com socket
-        const newSocket = await io('http://localhost:3000')
+        const newSocket = await io('https://server-chat2.onrender.com')
         await newSocket.emit('set_username', username)
 
         newSocket.on('messageToClient', message  =>{
