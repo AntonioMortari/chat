@@ -4,14 +4,21 @@ const {Server} = require('socket.io')
 
 const app = express()
 const httpServer = http.createServer(app)
-const io = new Server(httpServer, { cors: { origin: 'https://chat-silk-pi.vercel.app/'}})
+const io = new Server(httpServer, { cors: { origin: 'http://localhost:5173'}})
+let connectedUsers = 0
 
 io.on('connection', socket => {
     console.log('Usuário conectado', socket.id)
-    socket.emit('messageToClient', 'Conexão realizada')
+    connectedUsers++
+    io.emit('messageToClient', {
+        users: connectedUsers
+    })
 
     socket.on('disconnect', reason =>{
-        console.log(`Usuário de id ${socket.id} desconectado`)
+        connectedUsers--
+        io.emit('messageToClient', {
+            users: connectedUsers
+        })
     })
 
     socket.on('set_username', username =>{
@@ -22,7 +29,8 @@ io.on('connection', socket => {
         io.emit('new_message', {
             message:message,
             username: socket.data.username,
-            username_id: socket.id
+            username_id: socket.id,
+            timestamp: new Date()
         })
     })
 })

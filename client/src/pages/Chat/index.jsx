@@ -24,9 +24,10 @@ import OtherMessage from "../../components/OtherMessage";
 
 import style from './style.module.css'
 import { toast } from "react-toastify";
+import {getHours, getMinutes} from 'date-fns'
 
 function Chat() {
-    const {socket, setSocket, messageList, setMessageList} = useSocket()
+    const {socket, setSocket, messageList, setMessageList, connectedUsers} = useSocket()
     const navigate = useNavigate()
 
     const messageRef = useRef()
@@ -34,6 +35,8 @@ function Chat() {
 
     useEffect(() =>{
         if(!socket) return navigate('/')
+
+        messageRef.current.focus()
     },[])
 
     const handleSubmit = async() =>{
@@ -47,6 +50,7 @@ function Chat() {
 
         clearInput()
         scrollToBottom()
+        messageRef.current.focus()
     }
 
     const clearInput = () =>{
@@ -74,23 +78,36 @@ function Chat() {
         navigate('/')
     }
 
-    const showIsTyping = async () =>{
-        if(messageRef.current.value.length == 0){
-            await socket.emit('not_typing')
+    const getHour = (timestamp) =>{
+        const today = new Date(timestamp)
+        let hour = getHours(today)
+        let minutes = getMinutes(today)
+
+        if(hour < 10){
+            hour = `0${hour}`
         }
+
+        if(minutes < 10){
+            minutes = `0${minutes}`
+        }
+
+        return `${hour}:${minutes}`
     }
 
     return (
         <>
-            <Flex flexDir='column' w='450px' h='500px' bg='white' borderRadius='8px' p='15px' justifyContent='space-between'>
+            <Flex flexDir='column' w='450px' mr='20px' ml='20px' mt='20x' mb='20px' h='500px' bg='white' borderRadius='8px' p='15px' justifyContent='space-between'>
                 <div>
-                    <Heading display='flex' pb='4px' justifyContent='space-between'>
+                    <Heading display='flex' pb='8px' justifyContent='space-between' alignItems='center'>
                         <button onClick={backToHome}>
                             <IoReturnUpBackOutline size='30' color='#4B4453' />
                         </button>
-                        <Box display='flex' gap='10px'>
-                            <h2 className={style.titleChat}>Chat</h2>
-                            <BsChatLeftDots size='20' color='#845EC2' />
+                        <Box>
+                            <Box display='flex' gap='10px' alignSelf='end'>
+                                {/* <h2 className={style.titleChat}>Chat</h2> */}
+                                {/* <BsChatLeftDots size='20' color='#845EC2' /> */}
+                            </Box>
+                            <p className={style.users}>Usuários Conectados: { connectedUsers } </p>
                         </Box>
                     </Heading>
                     <Divider />
@@ -108,12 +125,14 @@ function Chat() {
                                     key={index}
                                     username={message.username}
                                     message={message.message}
+                                    hour={getHour(message.timestamp)}
                                 />
                             }else{
                                 return <OtherMessage
                                     key={index}
                                     message={message.message}
                                     username={message.username}
+                                    hour={getHour(message.timestamp)}
                                 />
                             }
                         })
@@ -125,7 +144,7 @@ function Chat() {
                 <Box>
                     
                     <InputGroup>
-                        <input onKeyDown={verifyKey} onChange={showIsTyping} type="text" ref={messageRef} className={style.inputMessage} />
+                        <input onKeyDown={verifyKey} type="text" ref={messageRef} className={style.inputMessage} />
 
                         <InputRightElement paddingBottom='10px'>
                             <button onClick={handleSubmit}>

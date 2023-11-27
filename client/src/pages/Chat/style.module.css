@@ -43,30 +43,41 @@
 
 .myMessage{
     background-color:#1279ff28;
-    padding: 8px;
+    padding: 10px;
     max-width: 190px;
+    min-width: 70px;
     border-radius: 6px;
     align-self: end;
 }
 
 .otherMessage{
     background-color: rgba(0, 0, 0, 0.123);
-    padding: 8px;
+    padding: 10px;
     max-width: 190px;
+    min-width: 70px;
     border-radius: 6px;
     align-self: start;
 }
 
 .myMessage span{
     font-weight: bold;
-    color: var(--black);
+}
+
+.otherMessage span{
+  font-weight: bold;
 }
 
 .messageContent{
-    color: rgba(0, 0, 0, 0.623);
+    color: rgba(0, 0, 0, 0.74);
 }
 
 .messageHour{
     color: rgba(0, 0, 0, 0.479);
     font-size: .7rem;
+    margin-top: 2px;
+}
+
+.users{
+  font-size: .8rem;
+  font-weight: normal;
 }

@@ -21,7 +21,7 @@ import useSocket from '../../hooks/useSocket'
 
 function Join() {
     const usernameRef = useRef()
-    const { setSocket, setMessageList, typing, setTyping } = useSocket()
+    const { setSocket, setMessageList, setConnectedUsers } = useSocket()
     const navigate = useNavigate()
 
     const handleSubmit = async() => {
@@ -32,13 +32,12 @@ function Join() {
         }
 
         // conetar com socket
-        const newSocket = await io('https://server-chat2.onrender.com')
+        const newSocket = await io('http://localhost:3000')
         await newSocket.emit('set_username', username)
 
-        newSocket.on('messageToClient', message  =>{
-            console.log(message)
+        newSocket.on('messageToClient', data  =>{
+            setConnectedUsers(data.users)
         })
-
 
         newSocket.on('new_message', data =>{
             setMessageList(prevList => [...prevList, data])   
@@ -58,7 +57,7 @@ function Join() {
     }
 
     return (
-        <Container bg='white' className={style.containerJoin} padding='20px' borderRadius='8px' boxShadow='0px 0px 20px rgba(0,0,0,0.22)'>
+        <Container mr='20px' ml='20px' bg='white' className={style.containerJoin} padding='20px' borderRadius='8px' boxShadow='0px 0px 20px rgba(0,0,0,0.22)'>
 
             <h1 className={style.titleJoin}>Bem-Vindo(a) ao Stranger!</h1>
 
@@ -67,7 +66,7 @@ function Join() {
                     <RiUser3Line color='#4B4453' />
                 </InputLeftElement>
 
-                <Input onKeyDown={verifyKey} ref={usernameRef} type='text' focusBorderColor='primary_1' placeholder='Digite seu nome de usuário' />
+                <Input onKeyDown={verifyKey} ref={usernameRef} type='text' focusBorderColor='primary_1' placeholder='Nome de usuário' />
             </InputGroup>
 
             <Button onClick={handleSubmit} _hover={{ bg: 'primary_3' }} mt='25px' bg='primary_2' color='white' rightIcon={<BsArrowRight />}>Comece a Conversar</Button>
