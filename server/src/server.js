@@ -4,7 +4,7 @@ const {Server} = require('socket.io')
 
 const app = express()
 const httpServer = http.createServer(app)
-const io = new Server(httpServer, { cors: { origin: 'https://chat-pi-azure.vercel.app/'}})
+const io = new Server(httpServer, { cors: { origin: '*'}})
 let connectedUsers = 0
 
 io.on('connection', socket => {
