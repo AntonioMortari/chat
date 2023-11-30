@@ -21,7 +21,7 @@ import useSocket from '../../hooks/useSocket'
 
 function Join() {
     const usernameRef = useRef()
-    const { setSocket, setMessageList, setConnectedUsers } = useSocket()
+    const { setUsername} = useSocket()
     const navigate = useNavigate()
 
     const handleSubmit = async() => {
@@ -31,22 +31,26 @@ function Join() {
             return toast.error('Digite um nome de usuário para continuar')
         }
 
-        // conetar com socket
-        const newSocket = await io('https://server-chat-9z4a.onrender.com')
-        await newSocket.emit('set_username', username)
+        setUsername(username)
 
-        newSocket.on('messageToClient', data  =>{
-            setConnectedUsers(data.users)
-        })
+        navigate('/rooms')
 
-        newSocket.on('new_message', data =>{
-            setMessageList(prevList => [...prevList, data])   
-        })
+        // // conetar com socket
+        // const newSocket = await io('http://localhost:3000')
+        // await newSocket.emit('set_username', username)
 
-        setSocket(newSocket)
+        // newSocket.on('messageToClient', data  =>{
+        //     setConnectedUsers(data.users)
+        // })
 
-        // mandar socket para o chat
-        navigate('/chat')
+        // newSocket.on('new_message', data =>{
+        //     setMessageList(prevList => [...prevList, data])   
+        // })
+
+        // setSocket(newSocket)
+
+        // // mandar socket para o chat
+        // navigate('/chat')
 
     }
 
