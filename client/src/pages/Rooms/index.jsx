@@ -8,6 +8,8 @@ import {
 
 } from '@chakra-ui/react'
 
+import CardRoom from '../../components/CardRoom'
+
 function Rooms() {
     const [defaultRooms, setDefaultRooms] = useState([])
 
@@ -27,8 +29,12 @@ function Rooms() {
 
         {
             defaultRooms.map(data => {
-                return <p>{data.name}</p>
+                return(
+                    <CardRoom name={data.name} id={data._id} description={data.description} />
+                )
             })
+
+            
         }
         
         </Container>

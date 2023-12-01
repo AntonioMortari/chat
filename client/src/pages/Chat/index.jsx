@@ -27,7 +27,7 @@ import { toast } from "react-toastify";
 import {getHours, getMinutes} from 'date-fns'
 
 function Chat() {
-    const {socket, setSocket, messageList, setMessageList, connectedUsers} = useSocket()
+    const {socket, setSocket, messageList, setMessageList, connectedUsers, idRoom} = useSocket()
     const navigate = useNavigate()
 
     const messageRef = useRef()
@@ -37,6 +37,7 @@ function Chat() {
         if(!socket) return navigate('/')
 
         messageRef.current.focus()
+        console.log(socket)
     },[])
 
     const handleSubmit = async() =>{
@@ -46,7 +47,15 @@ function Chat() {
             return toast.error('Não é possível enviar uma mensagem vazia!')
         }
 
-        await socket.emit('message', message)
+        if(idRoom){
+            await socket.emit('new_room_message', {
+                message,
+                id_room: idRoom
+            })
+        }else{
+            await socket.emit('new_global_message', message)
+        }
+
 
         clearInput()
         scrollToBottom()

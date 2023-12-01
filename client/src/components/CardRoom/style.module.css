@@ -1,0 +1,26 @@
+.hiddenDescription {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s ease-in-out;
+    position: absolute;
+    left: -9999px;
+}
+
+.showDescription {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.3s ease-in-out;
+    position: absolute;
+    min-width: 200px;
+    max-width: 340px;
+    left: 20px;
+    background-color: rgba(26, 25, 25, 0.836);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: .9rem;
+}
+
+.showDescription p {
+    font-weight: bold;
+}
